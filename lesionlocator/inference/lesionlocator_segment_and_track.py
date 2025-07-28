@@ -223,6 +223,9 @@ def segment_and_track():
                         'used the model will directly track the provided baseline labels. Default: prev_mask')
     parser.add_argument('-m', type=str, required=True,
                         help='Folder of the LesionLocator model called "LesionLocatorCheckpoint"')
+    parser.add_argument('-f', nargs='+', type=str, required=False, default=(0, 1, 2, 3, 4),
+                        help='Specify the folds of the trained model that should be used for prediction. '
+                             'Default: (0, 1, 2, 3, 4)')
     parser.add_argument('-device', type=str, default='cuda', required=False,
                         help="Use this to set the device the inference should run with.")
 
@@ -234,7 +237,6 @@ def segment_and_track():
         "CVPR.\n#######################################################################\n")
 
     args = parser.parse_args()
-    folds = (0, 1, 2, 3, 4)
 
     if not isdir(args.o):
         maybe_mkdir_p(args.o)
@@ -268,7 +270,7 @@ def segment_and_track():
                                 verbose_preprocessing=False)
         optimized_ckpt = "bbox_optimized" if args.t == 'box' else "point_optimized"
         checkpoint_folder = join(args.m, 'LesionLocatorSeg', optimized_ckpt)
-        initial_segmenter.initialize_from_trained_model_folder(checkpoint_folder, folds, "checkpoint_final.pth")
+        initial_segmenter.initialize_from_trained_model_folder(checkpoint_folder, args.f, "checkpoint_final.pth")
         print("Initiating segmentation.")
         predicted_files = initial_segmenter.predict_from_files(args.bl, args.o, args.p[0], args.t,
                                                             overwrite=True, num_processes_preprocessing=1,
@@ -280,6 +282,6 @@ def segment_and_track():
 
     print("Tracking lesions (this may be time consuming for large images)...")
     predictor = LesionLocatorSegTracker(model_folder=join(args.m, 'LesionLocatorTrack'),
-                                        folds=folds,
+                                        folds=args.f,
                                         device=device)
     predictor.track(baseline_image=args.bl, follow_up_images=args.fu, output_folder=args.o, prompt=prompt)

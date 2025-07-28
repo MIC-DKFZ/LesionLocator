@@ -126,6 +126,7 @@ LesionLocator_track
 | `-o` | **Output folder**: Where tracked lesion segmentations will be saved. Created automatically if it doesn't exist. |
 | `-t` | **Prompt type**: Options: `point`, `box`, or `prev_mask`. Use `point`/`box` to trigger segmentation of baseline lesions before tracking. Use `prev_mask` to track from an existing baseline label mask directly. Default is `prev_mask`. |
 | `-m` | **Model folder**: Path to the `LesionLocatorCheckpoint` directory containing tracking model weights. |
+| `-f` | **Model folds**: Specify one or more folds. Defaults to all 5 folds for ensemble prediction. |
 | `-device` | **Device selection**: Options are `cuda`, `cpu`, or `mps` (Apple Silicon). Controls where the inference runs. Default is `cuda`. |
 
 You can also run `LesionLocator_track -h` for help.
