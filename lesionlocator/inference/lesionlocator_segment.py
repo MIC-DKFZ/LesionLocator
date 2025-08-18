@@ -176,11 +176,11 @@ class LesionLocatorSegmenter(object):
             else:
                 if not overwrite:
                     # Remove already predicted files from the lists
-                    existing_files = [os.path.isfile(i) for i in output_files]
-                    not_existing_indices = [i for i, j in enumerate(input_files) if j not in existing_files]
-                    input_files = [input_files[i] for i in not_existing_indices]
-                    prompt_files = [prompt_files[i] for i in not_existing_indices]
-                    output_files = [output_files[i] for i in not_existing_indices]
+                    existing_files = [os.path.isfile(i.replace(".nii.gz", "_lesion_1.nii.gz")) for i in output_files]
+                    second_to_last_index = np.max(np.where(existing_files)[0])
+                    input_files = input_files[second_to_last_index:]
+                    prompt_files = prompt_files[second_to_last_index:]
+                    output_files = output_files[second_to_last_index:]
         else:
             assert not os.path.isdir(prompt_folder_or_file), \
                 "If '-i' is a file then '-p' (prompt) must also be files not folders."
