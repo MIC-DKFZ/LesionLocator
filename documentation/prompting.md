@@ -72,7 +72,10 @@ LesionLocator_create_prompt_json
 | `-o` | Output directory (will be created) |
 | `-label_type` | Type of input labels: `semantic` (binary) or `instance` (per-lesion IDs) |
 
-#### 💡 Note:
-- For `semantic` masks, connected components are computed before generating prompts.
-- Automatically generated prompts will have the same name as the corresponding image, ensuring compatibility.
+#### Label Types
+
+- **`instance`** → Use if labels already have **per-lesion IDs** (1, 2, 3, …). Prompts are generated for each ID.  
+- **`semantic`** → Use if labels are **binary** (all lesions = 1). LesionLocator splits them with **connected components** before generating prompts.  
+
+👉 In both cases, prompts are generated per lesion. JSONs are named after their source images for compatibility.
 

@@ -13,6 +13,7 @@ The paper introduces a novel framework for **zero-shot lesion segmentation** and
 > **Paper**: [![CVPR](https://img.shields.io/badge/%20CVPR%202025%20-open%20access-blue.svg)](https://openaccess.thecvf.com/content/CVPR2025/html/Rokuss_LesionLocator_Zero-Shot_Universal_Tumor_Segmentation_and_Tracking_in_3D_Whole-Body_CVPR_2025_paper.html)
 
 ## News/Updates:
+- 🎖️ **9/25**: Featured in the winning solution of the **[MICCAI autoPET IV Challenge](https://autopet-iv.grand-challenge.org/leaderboard/)** on *Promptable Longitudinal Lesion Tracking*
 - 🎤 **6/25**: LesionLocator was featured in the [**Voxel51 Visual AI in Healthcare Event**](https://voxel51.com/events/visual-ai-in-healthcare-june-27-2025) — Watch the talk [here](https://youtu.be/Bh8tqpHFQF0)
 - 💻 **4/25**: LesionLocator **code released**! 🥳 The checkpoint can be found [here](https://zenodo.org/records/15174217)
 - 🗃️ **3/25**: Lesion **Dataset** with Synthetic Follow-Ups Released 👉 [here](https://doi.dkfz.de/10.6097/DKFZ/IR/E230/20250324_1.zip)
