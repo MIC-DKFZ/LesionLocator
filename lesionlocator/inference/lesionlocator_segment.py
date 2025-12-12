@@ -400,7 +400,7 @@ class LesionLocatorSegmenter(object):
 
         def producer(d, slh, q):
             for s in slh:
-                q.put((torch.clone(d[s][None], memory_format=torch.contiguous_format).to(self.device), s))
+                q.put((torch.clone(d[tuple(s)][None], memory_format=torch.contiguous_format).to(self.device), s))
             q.put('end')
 
         try:
@@ -443,8 +443,8 @@ class LesionLocatorSegmenter(object):
 
                     if self.use_gaussian:
                         prediction *= gaussian
-                    predicted_logits[sl] += prediction
-                    n_predictions[sl[1:]] += gaussian
+                    predicted_logits[tuple(sl)] += prediction
+                    n_predictions[tuple(sl[1:])] += gaussian
                     queue.task_done()
                     pbar.update()
             queue.join()
@@ -575,6 +575,10 @@ def predict_seg_from_prompt():
 
     if not isdir(args.o):
         maybe_mkdir_p(args.o)
+
+    if args.continue_prediction and len(os.listdir(args.o)) == 0:
+        print(f"Output directory {args.o} is empty, but continue flag was set. Ignoring continue flag.")
+        args.continue_prediction = False
 
     assert args.device in ['cpu', 'cuda',
                            'mps'], f'-device must be either cpu, mps or cuda. Other devices are not tested/supported. Got: {args.device}.'

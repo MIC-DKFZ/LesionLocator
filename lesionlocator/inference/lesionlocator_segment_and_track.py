@@ -142,6 +142,9 @@ class LesionLocatorSegTracker(object):
         maybe_mkdir_p(output_folder)
         preprocessor = self.configuration_manager.preprocessor_class(verbose=False)
 
+        if isinstance(prompt, list):
+            prompt = natsorted(prompt)
+
         if isinstance(follow_up_images, str):
             images = [baseline_image, follow_up_images]
         else:
@@ -164,7 +167,7 @@ class LesionLocatorSegTracker(object):
             # If prompt is a list, we expect one filepath per lesion to track otherwise we assume
             # one file with all lesion instances (e.g. baseline instance segmentation labels)
             if isinstance(prompt, list):
-                prompts = natsorted(prompt)
+                prompts = prompt
                 lesion_indices = range(1, len(prompts) + 1)
                 bl = None
             else:
@@ -192,8 +195,17 @@ class LesionLocatorSegTracker(object):
 
                 predicted_files = []
                 for lesion_index in tqdm(lesion_indices):
+                    if isinstance(prompts, list) and prompt[lesion_index - 1] is None:
+                        predicted_files.append(None)
+                        continue
+                    
+                    # Here the actual tracking per lesion happens
                     filename = self.track_single_lesion(lesion_index, bl, fu, bl_path, fu_path, output_folder, prompts, properties, preprocessor)
-                    predicted_files.append(filename + self.dataset_json['file_ending'])
+
+                    if filename is not None:
+                        predicted_files.append(filename + self.dataset_json['file_ending'])
+                    else:
+                        predicted_files.append(None)
             torch.cuda.empty_cache()
             prompt = predicted_files
 
