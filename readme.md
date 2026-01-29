@@ -185,7 +185,7 @@ This dataset incorporates lesion data from various publicly available sources:
 - **[MSD Lung](http://medicaldecathlon.com/)**  
 - **[MSD Pancreas](http://medicaldecathlon.com/)**  
 - **[NIH Lymph](https://www.cancerimagingarchive.net/collection/ct-lymph-nodes/)**  
-- **[NSCLC Radiomics](https://www.cancerimagingarchive.net/collection/nsclc-radiomics/)**  
+- **[NSCLC Radiogenomics](https://www.cancerimagingarchive.net/collection/nsclc-radiogenomics/)**  
 
 #### 📜 This dataset is released under the **CC BY-NC-SA 4.0** license. 
 
