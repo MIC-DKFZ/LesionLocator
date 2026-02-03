@@ -233,6 +233,9 @@ class LesionLocatorSegmenter(object):
                 else:
                     for inst_id, p in enumerate(prompt):
                         inst_id += 1
+                        if not p:
+                            r.append(None)
+                            continue
                         print(f'\n Lesion ID {inst_id}: ')
                         p = sparse_to_dense_prompt(p, prompt_type, array=data)
                         if p is None:
@@ -267,7 +270,7 @@ class LesionLocatorSegmenter(object):
 
                 
                 print(f'done with {os.path.basename(ofile)}')
-            ret = [i.get()[0] for i in r]
+            ret = [i.get()[0] if i is not None else None for i in r]
 
         if isinstance(data_iterator, MultiThreadedAugmenter):
             data_iterator._finish()

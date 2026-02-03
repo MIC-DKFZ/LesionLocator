@@ -142,9 +142,6 @@ class LesionLocatorSegTracker(object):
         maybe_mkdir_p(output_folder)
         preprocessor = self.configuration_manager.preprocessor_class(verbose=False)
 
-        if isinstance(prompt, list):
-            prompt = natsorted(prompt)
-
         if isinstance(follow_up_images, str):
             images = [baseline_image, follow_up_images]
         else:
