@@ -139,11 +139,11 @@ def get_centroids_from_json(json, data_properties, patch_size):
             shape_after_cropping_and_before_resampling = data_properties["shape_after_cropping_and_before_resampling"]
             # Adapt the centroid to cropped data
             x = max(0, x - bbox_used_for_cropping[2][0])
-            x = min(shape_after_cropping_and_before_resampling[2], x - bbox_used_for_cropping[2][0])
+            x = min(shape_after_cropping_and_before_resampling[2], x)
             y = max(0, y - bbox_used_for_cropping[1][0])
-            y = min(shape_after_cropping_and_before_resampling[1], y - bbox_used_for_cropping[1][0])
+            y = min(shape_after_cropping_and_before_resampling[1], y)
             z = max(0, z - bbox_used_for_cropping[0][0])
-            z = min(shape_after_cropping_and_before_resampling[0], z - bbox_used_for_cropping[0][0])
+            z = min(shape_after_cropping_and_before_resampling[0], z)
 
             # Adjust for resampling
             shape = patch_size
