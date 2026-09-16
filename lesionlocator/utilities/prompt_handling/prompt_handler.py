@@ -148,9 +148,9 @@ def get_centroids_from_json(json, data_properties, patch_size):
             # Adjust for resampling
             shape = patch_size
             factor = [shape[i] / shape_after_cropping_and_before_resampling[i] for i in range(3)]
-            x = np.round(x * factor[2]).astype(np.uint16)
-            y = np.round(y * factor[1]).astype(np.uint16)
-            z = np.round(z * factor[0]).astype(np.uint16)
+            x = np.clip(np.round(x * factor[2]), 0, shape[2] - 1).astype(np.uint16)
+            y = np.clip(np.round(y * factor[1]), 0, shape[1] - 1).astype(np.uint16)
+            z = np.clip(np.round(z * factor[0]), 0, shape[0] - 1).astype(np.uint16)
 
             centroids.append([z, y, x])
     return centroids
