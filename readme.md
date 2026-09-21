@@ -14,6 +14,7 @@ The paper introduces a novel framework for **zero-shot lesion segmentation** and
 
 ## News/Updates:
 - 🗣️ **3/26**: Oral presentation at the [BVM Conference](https://link.springer.com/book/10.1007/978-3-658-51100-5)
+- ⚡ **12/25**: **Faster & leaner inference** on large or anisotropic scans via torch-based resampling 👉 [here](documentation/inference_speed.md)
 - 🎖️ **9/25**: Featured in the winning solution of the **[MICCAI autoPET IV Challenge](https://autopet-iv.grand-challenge.org/leaderboard/)** on *Promptable Longitudinal Lesion Tracking*
 - 🎤 **6/25**: LesionLocator was featured in the [**Voxel51 Visual AI in Healthcare Event**](https://voxel51.com/events/visual-ai-in-healthcare-june-27-2025) — Watch the talk [here](https://youtu.be/Bh8tqpHFQF0)
 - 💻 **4/25**: LesionLocator **code released**! 🥳 The checkpoint can be found [here](https://zenodo.org/records/15174217)
@@ -158,6 +159,23 @@ Once downloaded, extract the contents and use the `-m` argument in the CLI tools
 
 ---
 
+
+## ⚡ Speeding Up Inference
+
+LesionLocator resamples every image to a spacing of **1.0 × 0.8 × 0.8 mm**, which can produce very large volumes for scans with thick slices. If inference feels slow or runs out of RAM, switching the checkpoint to our built-in **PyTorch resampling** backend is a quick one-time patch.
+
+👉 How to enable it, plus more speed and memory tips: [**documentation/inference_speed.md**](documentation/inference_speed.md)
+
+#### Further options
+
+| Option | Effect |
+|--------|--------|
+| `-f 0` | Use a single fold instead of the 5-fold ensemble (~5× fewer forward passes) |
+| `--disable_tta` | Disable mirroring TTA (8× fewer forward passes, `LesionLocator_segment` only) |
+| `-npp` / `-nps` | Lower these (e.g. to `1`) to reduce peak RAM during preprocessing and export |
+| `LesionLocator_compile=1` | Environment variable to enable `torch.compile` for the segmentation network |
+
+---
 
 ## 🗃️ Lesion Dataset with Synthetic Follow-Ups
 
